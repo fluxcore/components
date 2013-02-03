@@ -9,5 +9,8 @@
 			"FluxCore": "src/"
 		}
 	},
+	"require": {
+		"illuminate/container": "dev-master"
+	},
 	"minimum-stability": "dev"
 }
