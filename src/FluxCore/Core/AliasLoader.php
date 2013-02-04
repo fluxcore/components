@@ -50,6 +50,7 @@ class AliasLoader
 	public function loadClass($class)
 	{
 		if (isset($this->aliasMap[$class])) {
+			class_exists($this->aliasMap[$class]);
 			class_alias($this->aliasMap[$class], $class);
 		}
 	}
