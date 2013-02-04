@@ -4,8 +4,6 @@ namespace FluxCore\Core\Service;
 
 use FluxCore\Core\Application;
 
-class ServiceProviderNotFoundException extends \RuntimeException { }
-
 class ServiceManager
 {
 	protected $app;
@@ -34,7 +32,9 @@ class ServiceManager
 		$service =& $this->services[$class];
 		$service = new $class($this->app);
 		if(!($service instanceof ServiceProvider)) {
-			throw new \RuntimeException("'$class' is not a valid service provider.");
+			throw new \RuntimeException(
+				"'$class' is not a valid service provider."
+			);
 		}
 
 		$service->register();

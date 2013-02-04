@@ -1,7 +1,6 @@
 <?php
 
 use FluxCore\Core\AliasLoader;
-use Composer\Autoload\ClassLoader;
 
 class AliasLoaderTest extends PHPUnit_Framework_TestCase
 {
