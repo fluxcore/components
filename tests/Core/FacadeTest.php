@@ -8,8 +8,8 @@ class FacadeTest extends PHPUnit_Framework_TestCase
 	public function setUp()
 	{
 		$this->app = new Application;
+		Facade::clearFacade(); // I hate unit-testing static things.
 		Facade::setFacadeApplication($this->app);
-		Facade::clearFacadeResolvedInstances(); // I hate unit-testing static things.
 	}
 
 	public function testSetGetFacadeApplication()

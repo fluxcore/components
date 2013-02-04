@@ -22,9 +22,10 @@ class Facade
 		return self::$app;
 	}
 
-	public static function clearFacadeResolvedInstances()
+	public static function clearFacade()
 	{
-		return (self::$resolvedInstances = array());
+		self::$app = null;
+		self::$resolvedInstances = array();
 	}
 
 	public static function getFacadeObject()
