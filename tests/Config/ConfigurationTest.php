@@ -20,4 +20,9 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 		$this->c['hello'] = 'not world'; // Ineffective
 		$this->assertEquals('world', $this->c['hello']);
 	}
+
+	public function testToArray()
+	{
+		$this->assertEquals(array('hello' => 'world'), $this->c->toArray());
+	}
 }

@@ -26,6 +26,11 @@ class Configuration implements \ArrayAccess
 		//
 	}
 
+	public function toArray()
+	{
+		return $this->data;
+	}
+
 	public function offsetExists($offset)
 	{
 		return isset($this->data[$offset]);
