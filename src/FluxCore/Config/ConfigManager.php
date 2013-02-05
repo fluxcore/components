@@ -40,6 +40,6 @@ class ConfigManager
 			);
 		}
 
-		return ($this->configs[$abstract] = $this->resolver->resolve($abstract));
+		return ($this->configs[$abstract] = $this->resolver->resolve($files[0]));
 	}
 }
