@@ -25,3 +25,9 @@ function closure_proxy($c, $a)
 		default: return call_user_func_array($c, $a);
 	}
 }
+
+function file_extension($path)
+{
+	$explode = explode('.', $path);
+	return end($explode);
+}
