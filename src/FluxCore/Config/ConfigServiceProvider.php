@@ -13,7 +13,7 @@ class ConfigServiceProvider extends ServiceProvider
 		$this->app['config.resolver'] = $this->app->share(function($app)
 		{
 			$resolver = new EngineResolver();
-			$resolver->add('php', new PhpEngine());
+			$resolver->register('php', new PhpEngine());
 
 			return $resolver;
 		});
