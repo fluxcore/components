@@ -1,6 +1,6 @@
 <?php
 
-namespace FluxCore\Config\ConfigFacade;
+namespace FluxCore\Config;
 
 use FluxCore\Core\Facade;
 
