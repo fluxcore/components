@@ -6,7 +6,7 @@ use FluxCore\Core\Facade;
 
 class ConfigFacade extends Facade
 {
-	public function getFacadeAccessor()
+	public static function getFacadeAccessor()
 	{
 		return 'config';
 	}
