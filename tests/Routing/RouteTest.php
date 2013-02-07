@@ -6,7 +6,7 @@ class RouteTest extends PHPUnit_Framework_TestCase
 {
 	public function setUp()
 	{
-		$this->route = new Route('', '', function() {});
+		$this->route = new Route('', '');
 	}
 
 	public function testPattern()

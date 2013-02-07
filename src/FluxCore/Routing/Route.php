@@ -8,11 +8,11 @@ class Route
 	protected $method;
 	protected $handler;
 
-	function __construct($pattern, $method, \Closure $handler)
+	function __construct($pattern, $method, \Closure $handler = null)
 	{
 		$this->setPattern($pattern);
 		$this->setMethod($method);
-		$this->setHandler($handler);
+		$this->setHandler(($handler != null) ? $handler : function() { });
 	}
 
 	public function getKey()
