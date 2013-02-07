@@ -28,7 +28,7 @@ class Configuration implements \ArrayAccess
 
 	public function toArray()
 	{
-		return $this->data[$name];
+		return $this->data;
 	}
 
 	public function offsetExists($offset)
