@@ -24,10 +24,10 @@ class Router
 		$this->routes->add(new Route($pattern, $method, $handler));
 	}
 
-	public function resolve(Request $request)
+	public function resolve($path, Request $request)
 	{
 		$id = new RouteIdentifier(
-			$request->getRequestUri(),
+			$path,
 			$request->getMethod()
 		);
 		

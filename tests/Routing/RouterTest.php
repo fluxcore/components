@@ -29,7 +29,7 @@ class RouterTest extends PHPUnit_Framework_TestCase
 	{
 		$this->assertEquals(
 			'Hello World',
-			$this->router->resolve(Request::create('/hello/world/', 'get'))
+			$this->router->resolve('/hello/world/', Request::create('/hello/world/', 'get'))
 		);
 	}
 }
