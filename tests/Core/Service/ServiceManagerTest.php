@@ -2,6 +2,7 @@
 
 use FluxCore\Core\Service\ServiceManager;
 use FluxCore\Core\Service\ServiceProvider;
+use Illuminate\Support\ServiceProvider as IlluminateProvider;
 
 class ServiceManagerTest extends PHPUnit_Framework_TestCase
 {
@@ -24,6 +25,9 @@ class ServiceManagerTest extends PHPUnit_Framework_TestCase
 	{
 		$this->manager->add('\TestServiceStub');
 		$this->assertEquals('hello all', $this->app['test.hello']);
+
+		$this->manager->add('\IlluminateServiceStub');
+		$this->assertEquals('hello ill', $this->app['test.illuminate']);
 	}
 
 	public function testAddServiceProviderNotFoundException()
@@ -48,6 +52,14 @@ class ServiceManagerTest extends PHPUnit_Framework_TestCase
 		}
 
 		$this->fail('An expected exception has not been raised.');
+	}
+}
+
+class IlluminateServiceStub extends IlluminateProvider
+{
+	public function register()
+	{
+		$this->app['test.illuminate'] = 'hello ill';
 	}
 }
 

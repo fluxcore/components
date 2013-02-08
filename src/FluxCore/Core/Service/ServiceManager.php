@@ -3,6 +3,7 @@
 namespace FluxCore\Core\Service;
 
 use FluxCore\Core\Application;
+use Illuminate\Support\ServiceProvider as IlluminateProvider;
 
 class ServiceManager
 {
@@ -31,7 +32,9 @@ class ServiceManager
 
 		$service =& $this->services[$class];
 		$service = new $class($this->app);
-		if(!($service instanceof ServiceProvider)) {
+		if(	!($service instanceof ServiceProvider) &&
+			!($service instanceof IlluminateProvider)
+		) {
 			throw new \RuntimeException(
 				"'$class' is not a valid service provider."
 			);
