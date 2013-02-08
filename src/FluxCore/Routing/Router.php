@@ -19,6 +19,14 @@ class Router
 		$this->resolver = $resolver;
 	}
 
+	function __call($method, $args)
+	{
+		$pattern = array_shift($args);
+		$handler = array_shift($args);
+
+		return method_proxy($this, 'add', array($pattern, $method, $handler));
+	}
+
 	public function add($pattern, $method, \Closure $handler)
 	{
 		$this->routes->add(new Route($pattern, $method, $handler));

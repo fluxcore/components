@@ -25,6 +25,17 @@ class RouterTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($this->routes->has($id));
 	}
 
+	public function testMagicAdd()
+	{
+		$this->router->get('/magic/hello/world/', function() {});
+		$this->router->post('/magic/post/world/', function() {});
+
+		$id = new RouteIdentifier('/magic/hello/world/', 'get');
+		$id2 = new RouteIdentifier('/magic/post/world/', 'post');
+		$this->assertTrue($this->routes->has($id));
+		$this->assertTrue($this->routes->has($id2));
+	}
+
 	public function testResolve()
 	{
 		$this->assertEquals(
