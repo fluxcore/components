@@ -20,7 +20,7 @@ class ConfigManagerTest extends PHPUnit_Framework_TestCase
 	public function testMake()
 	{
 		$this->assertEquals(
-			array('hello', 'world'),
+			array('hello', 'world', 'test' => 'value'),
 			$this->manager->make('does.exist')
 		);
 	}
@@ -44,8 +44,8 @@ class ConfigManagerTest extends PHPUnit_Framework_TestCase
 	public function testArrayAccess()
 	{
 		$this->assertEquals(
-			array('hello', 'world'),
-			$this->manager['does.exist']
+			'value',
+			$this->manager['test.test']
 		);
 	}
 }
@@ -54,7 +54,7 @@ class EngineResolverStub extends EngineResolver
 {
 	public function resolve($file)
 	{
-		return array('hello', 'world');
+		return array('hello', 'world', 'test' => 'value');
 	}
 }
 
