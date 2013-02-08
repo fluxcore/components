@@ -1,19 +1,19 @@
 <?php
 
-namespace FluxCore\Routing;
+namespace FluxCore\Routing\Route;
 
-class Route
+abstract class RouteKeyable
 {
 	protected $pattern;
 	protected $method;
-	protected $handler;
 
-	function __construct($pattern, $method, \Closure $handler = null)
+	function __construct($pattern, $method)
 	{
 		$this->setPattern($pattern);
 		$this->setMethod($method);
-		$this->setHandler(($handler != null) ? $handler : function() { });
 	}
+
+	public abstract function dispatch();
 
 	public function getKey()
 	{
@@ -43,20 +43,5 @@ class Route
 		$method = strtoupper($method);
 
 		return ($this->method = $method);
-	}
-
-	public function getHandler()
-	{
-		return $this->handler;
-	}
-
-	public function setHandler(\Closure $handler)
-	{
-		return ($this->handler = $handler);
-	}
-
-	public function dispatch($arguments = array())
-	{
-		return closure_proxy($this->handler, $arguments);
 	}
 }

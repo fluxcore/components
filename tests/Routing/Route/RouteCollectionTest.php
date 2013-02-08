@@ -1,7 +1,8 @@
 <?php
 
-use FluxCore\Routing\Route;
-use FluxCore\Routing\RouteCollection;
+use FluxCore\Routing\Route\Route;
+use FluxCore\Routing\Route\RouteCollection;
+use FluxCore\Routing\Route\RouteIdentifier;
 
 class RouteCollectionTest extends PHPUnit_Framework_TestCase
 {
@@ -12,25 +13,25 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 
 	public function testAddHasAndGet()
 	{
-		$routeFinder = new Route('/test/', 'get');
+		$routeIdentifier = new RouteIdentifier('/test/', 'get');
 		$route = new Route('/test/', 'get', function()
 		{
 			return 'Hello World';
 		});
 
 		$this->collection->add($route);
-		$this->assertTrue($this->collection->has($route));
-		$this->assertFalse($this->collection->has(new Route('/does/not/exist', 'post')));
-		$this->assertEquals($route, $this->collection->get($route));
+		$this->assertTrue($this->collection->has($routeIdentifier));
+		$this->assertFalse($this->collection->has(new RouteIdentifier('/does/not/exist', 'post')));
+		$this->assertEquals($route, $this->collection->get($routeIdentifier));
 	}
 
 	public function testIteratorAggregation()
 	{
 		$routes_ = array(
-			new Route('/test1/', 'get'),
-			new Route('/test2/', 'get'),
-			new Route('/test3/', 'get'),
-			new Route('/test4/', 'get'),
+			new Route('/test1/', 'get', function(){}),
+			new Route('/test2/', 'get', function(){}),
+			new Route('/test3/', 'get', function(){}),
+			new Route('/test4/', 'get', function(){}),
 		);
 
 		$routes = array();

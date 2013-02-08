@@ -1,12 +1,12 @@
 <?php
 
-use FluxCore\Routing\Route;
+use FluxCore\Routing\Route\RouteKeyable;
 
-class RouteTest extends PHPUnit_Framework_TestCase
+class RouteKeyableTest extends PHPUnit_Framework_TestCase
 {
 	public function setUp()
 	{
-		$this->route = new Route('', '');
+		$this->route = new RouteStub('', '');
 	}
 
 	public function testPattern()
@@ -40,17 +40,12 @@ class RouteTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(md5("GET:hello/world"), $this->route->getKey());
 	}
+}
 
-	public function testHandlerDispatch()
+class RouteStub extends RouteKeyable
+{
+	public function dispatch()
 	{
-		$this->route->setHandler(function($name)
-		{
-			return "Hello $name.";
-		});
-
-		$this->assertEquals(
-			'Hello John.',
-			$this->route->dispatch(array('John'))
-		);
+		//
 	}
 }
