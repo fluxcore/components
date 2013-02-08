@@ -22,7 +22,7 @@ class ConfigServiceProvider extends ServiceProvider
 		{
 			return new ConfigManager(
 				$app['config.resolver'],
-				new FileFinder($app['config.path'])
+				new FileFinder($app['path'].'config/')
 			);
 		});
 	}

@@ -7,9 +7,16 @@ class ConfigServiceProviderTest extends PHPUnit_Framework_TestCase
 {
 	public function setUp()
 	{
+		mkdir(__DIR__.'/config/');
+
 		$this->app = new Application();
-		$this->app['config.path'] = '';
+		$this->app['path'] = __DIR__.'/';
 		$this->prov = new ConfigServiceProvider($this->app);
+	}
+
+	public function tearDown()
+	{
+		rmdir(__DIR__.'/config/');
 	}
 
 	public function testRegister()
