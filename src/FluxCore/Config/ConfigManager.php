@@ -45,7 +45,10 @@ class ConfigManager implements \ArrayAccess
 
 	public function offsetGet($offset)
 	{
-		return $this->make($offset);
+		$split = explode('.', $offset);
+		$key = array_pop($split);
+
+		return $this->make(implode('.', $split))->{$key};
 	}
 
 	public function offsetSet($offset, $value)
