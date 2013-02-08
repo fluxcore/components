@@ -40,6 +40,14 @@ class ConfigManagerTest extends PHPUnit_Framework_TestCase
 
 		$this->fail('Expected RuntimeException was not raised.');
 	}
+
+	public function testArrayAccess()
+	{
+		$this->assertEquals(
+			array('hello', 'world'),
+			$this->manager['does.exist']
+		);
+	}
 }
 
 class EngineResolverStub extends EngineResolver

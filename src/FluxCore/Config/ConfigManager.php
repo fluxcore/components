@@ -5,7 +5,7 @@ namespace FluxCore\Config;
 use FluxCore\Config\EngineResolver;
 use FluxCore\IO\FileFinder;
 
-class ConfigManager
+class ConfigManager implements \ArrayAccess
 {
 	protected $resolver;
 	protected $fileFinder;
@@ -41,5 +41,31 @@ class ConfigManager
 		}
 
 		return ($this->configs[$abstract] = $this->resolver->resolve($files[0]));
+	}
+
+	public function offsetGet($offset)
+	{
+		return $this->make($offset);
+	}
+
+	public function offsetSet($offset, $value)
+	{
+		//
+	}
+
+	public function offsetUnset($offset)
+	{
+		//
+	}
+
+	public function offsetExists($offset)
+	{
+		try {
+			$this->make($offset);
+		} catch(\RuntimeException $e) {
+			return false;
+		}
+
+		return true;
 	}
 }
