@@ -13,6 +13,7 @@
 		"illuminate/container": "dev-master",
 		"illuminate/support": "dev-master",
 		"illuminate/view": "dev-master",
+		"illuminate/database": "dev-master",
 		"symfony/http-foundation": "2.1.7"
 	},
 	"minimum-stability": "dev"
