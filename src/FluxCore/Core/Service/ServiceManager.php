@@ -41,6 +41,9 @@ class ServiceManager
 		}
 
 		$service->register();
+		if(method_exists($service, 'boot')) {
+			$service->boot();
+		}
 	}
 
 	public function remove($class)
