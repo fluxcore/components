@@ -4,7 +4,7 @@ namespace FluxCore\Core;
 
 class ApplicationFacade extends Facade
 {
-	public function getFacadeAccessor()
+	public static function getFacadeAccessor()
 	{
 		return 'app';
 	}
