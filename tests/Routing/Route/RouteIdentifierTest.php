@@ -20,4 +20,10 @@ class RouteIdentifiertest extends PHPUnit_Framework_TestCase
 
 		$this->fail('Expected RuntimeException was not raised.');
 	}
+
+	public function testToString()
+	{
+		$id = new RouteIdentifier('hello/world', 'get');
+		$this->assertEquals('GET:hello/world', (string)$id);
+	}
 }

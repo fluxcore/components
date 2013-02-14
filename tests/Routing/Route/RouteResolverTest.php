@@ -1,5 +1,6 @@
 <?php
 
+use FluxCore\Routing\Exception\RouteNotFoundException;
 use FluxCore\Routing\Route\Route;
 use FluxCore\Routing\Route\RouteCollection;
 use FluxCore\Routing\Route\RouteIdentifier;
@@ -37,5 +38,25 @@ class RouteResolverTest extends PHPUnit_Framework_TestCase
 			'Hello john',
 			$this->resolver->resolve($id)->dispatch()
 		);
+	}
+
+	public function testResolveRouteNotFoundException()
+	{
+		$id = new RouteIdentifier('/404/not/found/', 'get');
+
+		try {
+			$this->resolver->resolve($id);
+		} catch(RouteNotFoundException $e) {
+			$this->assertEquals(
+				"Route for pattern 'GET:404/not/found' was not found.",
+				$e->getMessage()
+			);
+
+			$this->assertEquals($id, $e->getRouteIdentifier());
+
+			return;
+		}
+
+		$this->fail('Expected RouteNotFoundException was not raised.');
 	}
 }

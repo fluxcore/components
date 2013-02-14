@@ -2,6 +2,8 @@
 
 namespace FluxCore\Routing\Route;
 
+use FluxCore\Routing\Exception\RouteNotFoundException;
+
 class RouteResolver
 {
 	protected $routes;
@@ -36,6 +38,9 @@ class RouteResolver
 			}
 		}
 
-		return null;
+		throw new RouteNotFoundException(
+			"Route for pattern '{$id}' was not found.",
+			$id
+		);
 	}
 }
