@@ -41,9 +41,6 @@ class ServiceManager
 		}
 
 		$service->register();
-		if(method_exists($service, 'boot')) {
-			$service->boot();
-		}
 	}
 
 	public function remove($class)
@@ -53,5 +50,12 @@ class ServiceManager
 		}
 
 		unset($this->services[$class]);
+	}
+
+	public function boot()
+	{
+		foreach($this->services as $service) {
+			$service->boot();
+		}
 	}
 }

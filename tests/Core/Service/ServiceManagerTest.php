@@ -30,6 +30,13 @@ class ServiceManagerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('hello ill', $this->app['test.illuminate']);
 	}
 
+	public function testProviderBoot()
+	{
+		$this->manager->add('\TestServiceStub');
+		$this->manager->boot();
+		$this->assertEquals('yes', $this->app['test.hello.booted']);
+	}
+
 	public function testAddServiceProviderNotFoundException()
 	{
 		try {
@@ -76,6 +83,11 @@ class TestServiceStub extends ServiceProvider
 	public function register()
 	{
 		$this->app['test.hello'] = 'hello all';
+	}
+
+	public function boot()
+	{
+		$this->app['test.hello.booted'] = 'yes';
 	}
 }
 
