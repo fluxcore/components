@@ -17,28 +17,27 @@ class ConfigManagerTest extends PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('FileFinderStub', $this->manager->getFileFinder());
 	}
 
-	public function testMake()
+	public function testGet()
 	{
 		$this->assertEquals(
-			array('hello', 'world', 'test' => 'value'),
-			$this->manager->make('does.exist')
+			'world',
+			$this->manager->get('test.hello')
 		);
-	}
 
-	public function testMakeFileNotFoundException()
-	{
-		try {
-			$this->manager->make('does.not.exist');
-		} catch(RuntimeException $e) {
-			$this->assertEquals(
-				"The configuration for 'does.not.exist' does not exist.",
-				$e->getMessage()
-			);
+		$this->assertEquals(
+			'value',
+			$this->manager->get('test.test')
+		);
 
-			return;
-		}
+		$this->assertEquals(
+			'default_val',
+			$this->manager->get('test.notAKey', 'default_val')
+		);
 
-		$this->fail('Expected RuntimeException was not raised.');
+		$this->assertEquals(
+			'default_val',
+			$this->manager->get('does.not.exist', 'default_val')
+		);
 	}
 
 	public function testArrayAccess()
@@ -54,7 +53,7 @@ class EngineResolverStub extends EngineResolver
 {
 	public function resolve($file)
 	{
-		return array('hello', 'world', 'test' => 'value');
+		return array('hello' => 'world', 'test' => 'value');
 	}
 }
 

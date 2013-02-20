@@ -27,29 +27,33 @@ class ConfigManager implements \ArrayAccess
 		return $this->fileFinder;
 	}
 
-	public function make($abstract)
+	public function get($abstract, $default = null)
 	{
-		if(isset($this->configs[$abstract])) {
-			return $this->configs[$abstract];
+		// Split last key off of abstract and put it in a separate
+		// value and implode abstract again without key part.
+		$split = explode('.', $abstract);
+		$key = array_pop($split);
+		$abstract = implode('.', $split);
+
+		// If configuration isn't buffered, gather files and resolve
+		// first found file if there is one.
+		if(!isset($this->configs[$abstract])) {
+			$files = $this->fileFinder->find($abstract);
+			if(!empty($files)) {
+				$this->configs[$abstract] = $this->resolver->resolve($files[0]);
+			}
 		}
 
-		$files = $this->fileFinder->find($abstract);
-		if(empty($files)) {
-			throw new \RuntimeException(
-				"The configuration for '$abstract' does not exist."
-			);
-		}
-
-		return ($this->configs[$abstract] = $this->resolver->resolve($files[0]));
+		// Return the configuration value if it is set, otherwise
+		// return default.
+		return (isset($this->configs[$abstract][$key]))
+			? $this->configs[$abstract][$key]
+			: $default;
 	}
 
 	public function offsetGet($offset)
 	{
-		$split = explode('.', $offset);
-		$key = array_pop($split);
-
-		$config = $this->make(implode('.', $split));
-		return $config[$key];
+		return $this->get($offset);
 	}
 
 	public function offsetSet($offset, $value)
@@ -64,12 +68,6 @@ class ConfigManager implements \ArrayAccess
 
 	public function offsetExists($offset)
 	{
-		try {
-			$this->make($offset);
-		} catch(\RuntimeException $e) {
-			return false;
-		}
-
-		return true;
+		//
 	}
 }
