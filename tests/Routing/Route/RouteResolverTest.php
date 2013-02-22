@@ -1,10 +1,10 @@
 <?php
 
-use FluxCore\Routing\Exception\RouteNotFoundException;
 use FluxCore\Routing\Route\Route;
 use FluxCore\Routing\Route\RouteCollection;
 use FluxCore\Routing\Route\RouteIdentifier;
 use FluxCore\Routing\Route\RouteResolver;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RouteResolverTest extends PHPUnit_Framework_TestCase
 {
@@ -40,19 +40,17 @@ class RouteResolverTest extends PHPUnit_Framework_TestCase
 		);
 	}
 
-	public function testResolveRouteNotFoundException()
+	public function testResolveNotFoundHttpException()
 	{
 		$id = new RouteIdentifier('/404/not/found/', 'get');
 
 		try {
 			$this->resolver->resolve($id);
-		} catch(RouteNotFoundException $e) {
+		} catch(NotFoundHttpException $e) {
 			$this->assertEquals(
 				"Route for pattern 'GET:404/not/found' was not found.",
 				$e->getMessage()
 			);
-
-			$this->assertEquals($id, $e->getRouteIdentifier());
 
 			return;
 		}
