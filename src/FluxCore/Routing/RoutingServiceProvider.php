@@ -2,7 +2,7 @@
 
 namespace FluxCore\Routing;
 
-use FluxCore\Core\Service\ServiceProvider;
+use FluxCore\Core\ServiceProvider;
 use FluxCore\Routing\Route\RouteCollection;
 use FluxCore\Routing\Route\RouteResolver;
 
