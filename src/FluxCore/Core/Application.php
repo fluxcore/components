@@ -2,6 +2,8 @@
 
 namespace FluxCore\Core;
 
+use Illuminate\Events\EventServiceProvider;
+use Illuminate\Exception\ExceptionServiceProvider;
 use Illuminate\Foundation\Application as IlluminateApplication;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
