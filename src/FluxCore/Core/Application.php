@@ -2,10 +2,8 @@
 
 namespace FluxCore\Core;
 
-use Illuminate\Container\Container;
+use Illuminate\Foundation\Application as IlluminateApplication;
 
-class Application extends Container
+class Application extends IlluminateApplication
 {
-	public function before() {}
-	public function after() {}
 }
