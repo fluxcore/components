@@ -1,11 +1,7 @@
 <?php
 
-namespace FluxCore\Core;
+namespace FluxCore\Facade;
 
-class App extends Facade
+class App extends Illuminate\Support\Facades\App
 {
-	public static function getFacadeAccessor()
-	{
-		return 'app';
-	}
 }

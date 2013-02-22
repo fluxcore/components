@@ -2,7 +2,7 @@
 
 namespace FluxCore\Routing\Route;
 
-use FluxCore\Routing\Exception\RouteNotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RouteResolver
 {
@@ -38,9 +38,8 @@ class RouteResolver
 			}
 		}
 
-		throw new RouteNotFoundException(
-			"Route for pattern '{$id}' was not found.",
-			$id
+		throw new NotFoundHttpException(
+			"Route for pattern '{$id}' was not found."
 		);
 	}
 }

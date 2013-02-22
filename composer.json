@@ -12,7 +12,8 @@
 	"require": {
 		"illuminate/foundation": "dev-master",
 		"illuminate/support": "dev-master",
-		"symfony/http-foundation": "2.2.*"
+		"symfony/http-foundation": "2.2.*",
+		"symfony/http-kernel": "2.2.*"
 	},
 	"minimum-stability": "dev"
 }

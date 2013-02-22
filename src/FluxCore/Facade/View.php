@@ -2,10 +2,6 @@
 
 namespace FluxCore\Facade;
 
-class View extends Facade
+class View extends Illuminate\Support\Facades\View
 {
-	public static function getFacadeAccessor()
-	{
-		return 'view';
-	}
 }

@@ -2,7 +2,7 @@
 
 namespace FluxCore\Facade;
 
-class Config extends Facade
+class Config extends Illuminate\Support\Facades\Config
 {
 	public static function getFacadeAccessor()
 	{
