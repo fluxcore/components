@@ -3,7 +3,7 @@
 namespace FluxCore\Config;
 
 use FluxCore\Config\Engine\PhpEngine;
-use FluxCore\Core\ServiceProvider;
+use FluxCore\Core\Service\ServiceProvider;
 use FluxCore\IO\FileFinder;
 
 class ConfigServiceProvider extends ServiceProvider

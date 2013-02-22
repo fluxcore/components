@@ -10,9 +10,9 @@
 		}
 	},
 	"require": {
-		"illuminate/foundation": "dev-master",
+		"illuminate/container": "dev-master",
 		"illuminate/support": "dev-master",
-		"symfony/http-foundation": "2.2.*"
+		"symfony/http-foundation": "2.1.7"
 	},
 	"minimum-stability": "dev"
 }
