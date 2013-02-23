@@ -3,17 +3,20 @@
 namespace FluxCore\Core;
 
 use Closure;
+use FluxCore\Config\ConfigServiceProvider;
 use Illuminate\Container\Container;
 use Illuminate\Events\EventServiceProvider;
 use Illuminate\Exception\ExceptionServiceProvider;
+use Illuminate\Filesystem\FilesystemServiceProvider;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Application extends Container
 {
-	protected $serviceProviders = array();
 	protected $booted = false;
+	protected $serviceProviders = array();
 
 	function __construct(Request $request = null)
 	{
@@ -23,102 +26,41 @@ class Application extends Container
 			? $request
 			: Request::createFromGlobals();
 
-		// Core services. (A lot of Illuminate components depend on these.)
+		// Register configuration service provider.
+		$this->register(new ConfigServiceProvider($this));
+	}
+
+	public function registerIlluminateCore()
+	{
+		// This is to provide compatibility with Illuminate components as
+		// most of them depend on these services.
+		
+		// illuminate/filesystem
+		$this->register(new FilesystemServiceProvider($this));
+
+		// illuminate/events
 		$this->register(new EventServiceProvider($this));
+
+		// illuminate/exception
 		$this->register(new ExceptionServiceProvider($this));
 	}
 
-	public function register(ServiceProvider $provider)
+	public function register(BaseServiceProvider $provider)
 	{
+		// Register service provider.
 		$provider->register();
-		$this->serviceProviders[] = $provider;
+
+		// Store service provider.
+		$this->serviceProviders[get_class($provider)] = $provider;
 	}
 
-	public function bindFrameworkPaths(array $paths)
+	public function isRegistered($class)
 	{
-		$this->instance('path',			$paths['app']);
-		$this->instance('path.base',	$paths['base']);
-		$this->instance('path.public',	$paths['public']);
-	}
-
-	public function run()
-	{
-		// Dispatch request and prepare the response.
-		$response = $this->prepareResponse(
-			$this->dispatch($this['request']),
-			$this['request']
-		);
-
-		// Fire application before event.
-		$this['events']->fire('application.before', array($response));
-
-		$response->send();
-
-		// Fire application after event.
-		$this['events']->fire('application.before', array($response));
+		return isset($this->serviceProviders[$class]);
 	}
 
 	public function boot()
 	{
-		// Do not boot again if Application already has been booted.
-		if ($this->booted) {
-			return;
-		}
-
-		// Boot all service providers.
-		foreach ($this->serviceProviders as $provider) {
-			$provider->boot();
-		}
-
-		// Booting finished, this can not occur again during this session.
-		$this->booted = true;
-	}
-
-	public function dispatch(Request $request)
-	{
-		// Prepare request and dispatch request from the router.
-		return $this['router']->dispatch($this->prepareRequest($this['request']));
-	}
-
-	public function prepareRequest(Request $request)
-	{
-		// If session is available, set session store on request.
-		if (isset($this['session'])) {
-			$request->setSessionStore($this['session']);
-		}
-
-		return $request;
-	}
-
-	public function prepareResponse($response, Request $request)
-	{
-		if (!$response instanceof Response) {
-			$response = new Response($response);
-		}
-
-		return $response->prepare($request);
-	}
-
-	public function before($callback)
-	{
-		$this['events']->listen('application.before', $callback);
-	}
-
-	public function after($callback)
-	{
-		$this['events']->listen('application.after', $callback);
-	}
-
-	public function missing($callback)
-	{
-		$this->error(function(NotFoundHttpException $e)
-		{
-			return call_user_func($callback, $e);
-		});
-	}
-
-	public function error(Closure $callback)
-	{
-		$this['exception']->error($callback);
+		//
 	}
 }

@@ -13,9 +13,13 @@
 		"illuminate/container": "dev-master",
 		"illuminate/events": "dev-master",
 		"illuminate/exception": "dev-master",
+		"illuminate/filesystem": "dev-master",
 		"illuminate/support": "dev-master",
 		"symfony/http-foundation": "2.2.*",
 		"symfony/http-kernel": "2.2.*"
+	},
+	"require-dev": {
+		"mockery/mockery": "dev-master"
 	},
 	"minimum-stability": "dev"
 }
