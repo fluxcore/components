@@ -21,10 +21,18 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($app->isRegistered(get_class($provider)));
 	}
 
-	public function testIlluminateCoreRegistration()
+	public function testConfigServiceRegistration()
 	{
 		$app = new Application;
-		$app->registerIlluminateCore();
+		$app->registerConfigService();
+
+		$this->assertTrue($app->isRegistered('FluxCore\Config\ConfigServiceProvider'));
+	}
+
+	public function testIlluminateCoreServicesRegistration()
+	{
+		$app = new Application;
+		$app->registerIlluminateCoreServices();
 
 		$this->assertTrue($app->isRegistered('Illuminate\Filesystem\FilesystemServiceProvider'));
 		$this->assertTrue($app->isRegistered('Illuminate\Exception\ExceptionServiceProvider'));

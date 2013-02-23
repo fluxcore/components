@@ -25,12 +25,14 @@ class Application extends Container
 		$this['request'] = ($request)
 			? $request
 			: Request::createFromGlobals();
+	}
 
-		// Register configuration service provider.
+	public function registerConfigService()
+	{
 		$this->register(new ConfigServiceProvider($this));
 	}
 
-	public function registerIlluminateCore()
+	public function registerIlluminateCoreServices()
 	{
 		// This is to provide compatibility with Illuminate components as
 		// most of them depend on these services.
