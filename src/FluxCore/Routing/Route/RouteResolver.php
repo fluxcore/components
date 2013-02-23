@@ -38,8 +38,6 @@ class RouteResolver
 			}
 		}
 
-		throw new NotFoundHttpException(
-			"Route for pattern '{$id}' was not found."
-		);
+		throw new NotFoundHttpException("Route for pattern '{$id}' was not found.");
 	}
 }

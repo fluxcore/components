@@ -4,4 +4,4 @@ namespace FluxCore\Core;
 
 use Illuminate\Support\ServiceProvider as IlluminateProvider;
 
-class ServiceProvider extends IlluminateProvider {}
+abstract class ServiceProvider extends IlluminateProvider {}

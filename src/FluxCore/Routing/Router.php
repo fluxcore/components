@@ -32,7 +32,7 @@ class Router
 		$this->routes->add(new Route($pattern, $method, $handler));
 	}
 
-	public function resolve($path, Request $request)
+	public function dispatch($path, Request $request)
 	{
 		$id = new RouteIdentifier(
 			$path,

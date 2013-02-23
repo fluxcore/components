@@ -36,11 +36,11 @@ class RouterTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($this->routes->has($id2));
 	}
 
-	public function testResolve()
+	public function testDispatch()
 	{
 		$this->assertEquals(
 			'Hello World',
-			$this->router->resolve('/hello/world/', Request::create('/hello/world/', 'get'))
+			$this->router->dispatch('/hello/world/', Request::create('/hello/world/', 'get'))
 		);
 	}
 }
