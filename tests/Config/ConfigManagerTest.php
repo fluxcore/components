@@ -20,6 +20,11 @@ class ConfigManagerTest extends PHPUnit_Framework_TestCase
 	public function testGet()
 	{
 		$this->assertEquals(
+			array('hello' => 'world', 'test' => 'value'),
+			$this->manager->get('test')
+		);
+
+		$this->assertEquals(
 			'world',
 			$this->manager->get('test.hello')
 		);
@@ -45,6 +50,11 @@ class ConfigManagerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(
 			'value',
 			$this->manager['test.test']
+		);
+
+		$this->assertEquals(
+			array('hello' => 'world', 'test' => 'value'),
+			$this->manager['test']
 		);
 	}
 }

@@ -33,7 +33,12 @@ class ConfigManager implements \ArrayAccess
 		// value and implode abstract again without key part.
 		$split = explode('.', $abstract);
 		$key = array_pop($split);
-		$abstract = implode('.', $split);
+		$abstract = implode($split);
+
+		if ($abstract == '') {
+			$key = null;
+			$abstract = $key;
+		}
 
 		// If configuration isn't buffered, gather files and resolve
 		// first found file if there is one.
@@ -44,11 +49,19 @@ class ConfigManager implements \ArrayAccess
 			}
 		}
 
+		$value = (isset($this->configs[$abstract]))
+			? $this->configs[$abstract]
+			: null;
+
+		if ($key != null && $value != null) {
+			$value = (isset($value[$key]))
+				? $value[$key]
+				: null;
+		}
+
 		// Return the configuration value if it is set, otherwise
 		// return default.
-		return (isset($this->configs[$abstract][$key]))
-			? $this->configs[$abstract][$key]
-			: $default;
+		return ($value) ? $value : $default;
 	}
 
 	public function offsetGet($offset)
