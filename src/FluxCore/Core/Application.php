@@ -75,6 +75,11 @@ class Application extends Container
 		$this['events']->listen("app.$name", $callback);
 	}
 
+	public function exception(Closure $callback)
+	{
+		$this['exception']->error($callback);
+	}
+
 	public function run()
 	{
 		if (!isset($this['router'])) {
