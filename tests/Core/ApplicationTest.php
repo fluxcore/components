@@ -88,4 +88,12 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
 		$request = Request::createFromGlobals();
 		$request = $app->prepareRequest($request);
 	}
+
+	public function testBindingOfFrameworkPaths()
+	{
+		$app = new Application;
+		$app->bindFrameworkPaths(array('base' => '/path'));
+
+		$this->assertEquals('/path', $app['path.base']);
+	}
 }

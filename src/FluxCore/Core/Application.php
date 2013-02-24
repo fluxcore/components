@@ -109,13 +109,16 @@ class Application extends Container
 
 	public function bindFrameworkPaths(array $paths)
 	{
-		$this['path'] = $paths['app'];
-		$this['path.base'] = $paths['base'];
-		$this['path.public'] = $paths['public'];
+		foreach ($paths as $abstract => $path) {
+			$this["path.$abstract"] = $path;
+		}
 	}
 
 	public function getBootstrapFile()
 	{
-		return __DIR__.'/start.php';
+		// Maybe but probably not..
+		// return __DIR__.'/start.php';
+		
+		// return $this['path'].'/start.php';
 	}
 }
