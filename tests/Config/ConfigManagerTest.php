@@ -30,11 +30,6 @@ class ConfigManagerTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals(
-			'value',
-			$this->manager->get('test.test')
-		);
-
-		$this->assertEquals(
 			'default_val',
 			$this->manager->get('test.notAKey', 'default_val')
 		);
@@ -56,6 +51,16 @@ class ConfigManagerTest extends PHPUnit_Framework_TestCase
 			array('hello' => 'world', 'test' => 'value'),
 			$this->manager['test']
 		);
+
+		$this->assertEquals(
+			null,
+			$this->manager['test.notAKey']
+		);
+
+		$this->assertEquals(
+			null,
+			$this->manager['does.not.exist']
+		);
 	}
 }
 
@@ -76,8 +81,9 @@ class FileFinderStub extends FileFinder
 
 	public function find($abstract, $extension = '*')
 	{
-		return ($abstract == 'does.not.exist')
-			? array()
-			: array('file/path');
+		switch ($abstract) {
+			case 'test': return array('file/path');
+			default: return array();
+		}
 	}
 }

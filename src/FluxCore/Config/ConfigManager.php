@@ -33,11 +33,11 @@ class ConfigManager implements \ArrayAccess
 		// value and implode abstract again without key part.
 		$split = explode('.', $abstract);
 		$key = array_pop($split);
-		$abstract = implode($split);
+		$abstract = implode('.', $split);
 
 		if ($abstract == '') {
-			$key = null;
 			$abstract = $key;
+			$key = null;
 		}
 
 		// If configuration isn't buffered, gather files and resolve
