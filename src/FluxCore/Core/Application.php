@@ -15,54 +15,107 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Application extends Container
 {
-	protected $booted = false;
-	protected $serviceProviders = array();
+	protected $initialized = false;
 
-	function __construct(Request $request = null)
+	function __construct(Request $request = null, ServiceManager $services = null)
 	{
 		// If a request was passed to the constructor, we use it.
 		// Otherwise we create a new one from globals.
 		$this['request'] = ($request)
 			? $request
 			: Request::createFromGlobals();
+
+		// If a specific service manager was passed, we use it.
+		// Otherwise we create a new one.
+		$this['services'] = ($services)
+			? $services
+			: new ServiceManager();
 	}
 
-	public function registerConfigService()
+	public function initialize(Closure $callback)
 	{
-		$this->register(new ConfigServiceProvider($this));
-	}
+		// Do not initialize if application already has been initialized.
+		if ($this->initialized) {
+			return;
+		}
 
-	public function registerIlluminateCoreServices()
-	{
-		// This is to provide compatibility with Illuminate components as
-		// most of them depend on these services.
-		
+		// Configuration service.
+	//	$this['services']->register(new ConfigServiceProvider($this));
+
 		// illuminate/filesystem
-		$this->register(new FilesystemServiceProvider($this));
+	//	$this['services']->register(new FilesystemServiceProvider($this));
 
 		// illuminate/events
-		$this->register(new EventServiceProvider($this));
+	//	$this['services']->register(new EventServiceProvider($this));
 
 		// illuminate/exception
-		$this->register(new ExceptionServiceProvider($this));
+	//	$this['services']->register(new ExceptionServiceProvider($this));
+
+		// Invoke callback with a reference to this class.
+		call_user_func($callback, $this);
+
+		// Application is now initialized.
+		$this->initialized = true;
 	}
 
-	public function register(BaseServiceProvider $provider)
+	public function hasInitialized()
 	{
-		// Register service provider.
-		$provider->register();
-
-		// Store service provider.
-		$this->serviceProviders[get_class($provider)] = $provider;
+		return $this->initialized;
 	}
 
-	public function isRegistered($class)
+	public function event($name, $callback)
 	{
-		return isset($this->serviceProviders[$class]);
+		if (!isset($this['events'])) {
+			throw new \RuntimeException(
+				'Unable to bind application event as '.
+				'$this[\'events\'] has not been defined'
+			);
+		}
+
+		$this['events']->listen("app.$name", $callback);
 	}
 
-	public function boot()
+	public function run()
 	{
-		//
+		if (!isset($this['router'])) {
+			throw new \RuntimeException(
+				'Unable to run application as '.
+				'$this[\'router\'] has not been defined'
+			);
+		}
+
+		$request = $this->prepareRequest($this['request']);
+		$response = $this['router']->dispatch($request);
+		$response = $this->prepareResponse($response, $request);
+
+		$response->send();
+	}
+
+	public function prepareRequest(Request $request)
+	{
+		// TODO
+
+		return $request;
+	}
+
+	public function prepareResponse($response, Request $request)
+	{
+		if (!$response instanceof Response) {
+			$response = new Response($response);
+		}
+
+		return $response->prepare($request);
+	}
+
+	public function bindFrameworkPaths(array $paths)
+	{
+		$this['path'] = $paths['app'];
+		$this['path.base'] = $paths['base'];
+		$this['path.public'] = $paths['public'];
+	}
+
+	public function getBootstrapFile()
+	{
+		return __DIR__.'/start.php';
 	}
 }
