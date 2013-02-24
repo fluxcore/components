@@ -25,74 +25,26 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($app->hasInitialized());
 	}
 
-	public function testEvent()
+	public function testRun()
 	{
 		$app = new Application;
-		$app->initialize(function($app) {
-			$app['services']->register(new EventServiceProvider($app));
-		});
+		$this->assertFalse($app->hasRun());
 
-		$app->event('test', function()
+		$app->run(function($app, $request)
 		{
-			return 'Test';
+			$router = M::mock('stdClass');
+			$router->shouldReceive('dispatch')->once();
+
+			$router->dispatch();
 		});
 
-		$this->assertEquals(
-			array('Test'),
-			$app['events']->fire('app.test')
-		);
+		$this->assertTrue($app->hasRun());
 	}
 
-	public function testEventNotInitializedException()
+	public function testBindingOfPaths()
 	{
 		$app = new Application;
-
-		try {
-			$app->event('test', function() {});
-		} catch (RuntimeException $e) {
-			$this->assertEquals(
-				'Unable to bind application event as '.
-				'$this[\'events\'] has not been defined',
-				$e->getMessage()
-			);
-
-			return;
-		}
-
-		$this->fail('Expected RuntimeException was not raised.');
-	}
-
-	public function testRunNoRouterException()
-	{
-		$app = new Application;
-
-		try {
-			$app->run();
-		} catch (RuntimeException $e) {
-			$this->assertEquals(
-				'Unable to run application as '.
-				'$this[\'router\'] has not been defined',
-				$e->getMessage()
-			);
-
-			return;
-		}
-
-		$this->fail('Expected RuntimeException was not raised.');
-	}
-
-	public function testPrepareRequestAndResponse()
-	{
-		$app = new Application;
-
-		$request = Request::createFromGlobals();
-		$request = $app->prepareRequest($request);
-	}
-
-	public function testBindingOfFrameworkPaths()
-	{
-		$app = new Application;
-		$app->bindFrameworkPaths(array('base' => '/path'));
+		$app->bindPaths(array('base' => '/path'));
 
 		$this->assertEquals('/path', $app['path.base']);
 	}
