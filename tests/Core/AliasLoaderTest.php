@@ -6,24 +6,16 @@ class AliasLoaderTest extends PHPUnit_Framework_TestCase
 {
 	public function setUp()
 	{
-		$this->loader = new AliasLoader();
-		$this->loader->register();
+		AliasLoader::addAliases(array('Stub' => 'LongNameStubClass'));
 	}
 
-	public function testFindFile()
+	public function testLoad()
 	{
-		$this->loader->addAliasMap(array('Test' => 'TestFile'));
-		$this->assertFalse(class_exists('ThisIsANonExistantClass'));
-		$this->assertTrue(class_exists('TestFile'));
-		$this->assertTrue(class_exists('Test'));
-		$this->assertFalse(class_exists('Testing'));
+		$this->assertFalse(class_exists('Stub'));
+		$this->assertFalse(AliasLoader::load('Stub'));
+		$this->assertTrue(class_exists('Stub'));
 	}
 }
 
-class TestFile
-{
-	public function hello()
-	{
-		return 'World';
-	}
-}
+class LongNameStubClass
+{}

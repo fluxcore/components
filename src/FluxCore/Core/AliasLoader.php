@@ -2,55 +2,83 @@
 
 namespace FluxCore\Core;
 
-class AliasLoader
-{
-    private $aliasMap = array();
-
-    public function getAliasMap()
-    {
-        return $this->aliasMap;
-    }
-
-    /**
-     * @param array $aliasMap Class to filename map
-     */
-    public function addAliasMap(array $aliasMap)
-    {
-        if ($this->aliasMap) {
-            $this->aliasMap = array_merge($this->aliasMap, $aliasMap);
-        } else {
-            $this->aliasMap = $aliasMap;
-        }
-    }
+class AliasLoader {
 
 	/**
-	 * Registers this instance as an autoloader.
+	 * The registered aliases.
 	 *
-	 * @param bool $prepend Whether to prepend the autoloader or not
+	 * @var array
 	 */
-	public function register($prepend = true)
+	protected static $aliases = array();
+
+	/**
+	 * Indicates if a AliasLoader has been registered.
+	 *
+	 * @var bool
+	 */
+	protected static $registered = false;
+
+	/**
+	 * Load the given class from alias.
+	 *
+	 * @param  string  $alias
+	 * @return void
+	 */
+	public static function load($alias)
 	{
-		spl_autoload_register(array($this, 'loadClass'), true, $prepend);
+		$alias = static::normalizeAlias($alias);
+
+		if (isset(static::$aliases[$alias])) {
+			class_alias(static::$aliases[$alias], $alias);
+		}
+
+		return false;
 	}
 
 	/**
-	 * Unregisters this instance as an autoloader.
+	 * Get a normalized alias.
+	 *
+	 * @param  string  $alias
+	 * @return string
 	 */
-	public function unregister()
+	public static function normalizeAlias($alias)
 	{
-		spl_autoload_unregister(array($this, 'loadClass'));
+		if ($alias[0] == '\\') {
+			$alias = substr($alias, 1);
+		}
+
+		return $alias;
 	}
 
 	/**
-	 * Loads the given class or interface.
+	 * Register the given alias loader on the auto-loader stack.
 	 *
-	 * @param  string	$class The name of the class
-	 * @return bool|null True, if loaded
+	 * @return void
 	 */
-	public function loadClass($class)
+	public static function register()
 	{
-		if (isset($this->aliasMap[$class])) {
-			class_alias($this->aliasMap[$class], $class);
+		if (!static::$registered) {
+			spl_autoload_register(array('\FluxCore\Core\AliasLoader', 'load'), true, true);
+
+			static::$registered = true;
 		}
 	}
+
+	/**
+	 * Gets all the aliases registered with the loader.
+	 *
+	 * @return array
+	 */
+	public static function getAliases()
+	{
+		return static::$aliases;
+	}
+
+	public static function addAliases(array $aliases)
+	{
+		foreach ($aliases as $alias => $class) {
+			static::$aliases[static::normalizeAlias($alias)] = $class;
+		}
+	}
+
 }
