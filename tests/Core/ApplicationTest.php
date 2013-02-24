@@ -44,8 +44,9 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
 	public function testBindingOfPaths()
 	{
 		$app = new Application;
-		$app->bindPaths(array('base' => '/path'));
+		$app->bindPaths(array('app' => '/', 'base' => '/path'));
 
+		$this->assertEquals('/', $app['path']);
 		$this->assertEquals('/path', $app['path.base']);
 	}
 }

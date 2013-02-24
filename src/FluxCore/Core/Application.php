@@ -74,7 +74,11 @@ class Application extends Container
 	public function bindPaths(array $paths)
 	{
 		foreach ($paths as $abstract => $path) {
-			$this["path.$abstract"] = $path;
+			if ($abstract == 'app') {
+				$this['path'] = $path;
+			} else {
+				$this["path.$abstract"] = $path;
+			}
 		}
 	}
 }
