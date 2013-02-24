@@ -2,6 +2,6 @@
 
 namespace FluxCore\Core;
 
-use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\Facades\Facade as BaseFacade;
 
-class Facade extends IlluminateFacade {}
+class Facade extends BaseFacade {}
