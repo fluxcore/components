@@ -5,13 +5,7 @@ namespace FluxCore\Core;
 use Closure;
 use FluxCore\Config\ConfigServiceProvider;
 use Illuminate\Container\Container;
-use Illuminate\Events\EventServiceProvider;
-use Illuminate\Exception\ExceptionServiceProvider;
-use Illuminate\Filesystem\FilesystemServiceProvider;
-use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Application extends Container
 {
@@ -31,6 +25,23 @@ class Application extends Container
 		$this['services'] = ($services)
 			? $services
 			: new ServiceManager();
+	}
+
+	function __call($name, $args)
+	{
+		if (empty($args) || !$args[0] instanceof Closure) {
+			return;
+		}
+
+		// App::missing() compatibility.
+		if ($name == 'missing') {
+			$this['exception']->error($args[0]);
+
+			return;
+		}
+
+		// App::before(), App::after(), App::finish(), etc.
+		$this['events']->listen("app.$name", $args[0]);
 	}
 
 	public function initialize($callback)
