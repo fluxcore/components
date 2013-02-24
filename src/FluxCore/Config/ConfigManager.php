@@ -61,7 +61,7 @@ class ConfigManager implements \ArrayAccess
 
 		// Return the configuration value if it is set, otherwise
 		// return default.
-		return ($value) ? $value : $default;
+		return ($value !== null) ? $value : $default;
 	}
 
 	public function offsetGet($offset)
