@@ -81,14 +81,13 @@ class ExceptionServiceProvider extends ServiceProvider
 			return function($exception) use ($app)
 			{
 				$response = $app['exception']->handle($exception);
+				$response = $app->prepareResponse($response, $app['request']);
 
 				// If one of the custom error handlers returned a response, we will send that
 				// response back to the client after preparing it. This allows a specific
 				// type of exceptions to handled by a Closure giving great flexibility.
-				if ( ! is_null($response))
+				if ($response->getContent() != '')
 				{
-					$response = $app->prepareResponse($response, $app['request']);
-
 					$response->send();
 				}
 				else
