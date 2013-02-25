@@ -2,7 +2,9 @@
 
 namespace FluxCore\Facade;
 
-class Exception extends FluxCore\Core\Facade
+use FluxCore\Core\Facade;
+
+class Exception extends Facade
 {
 	public static function getFacadeAccessor()
 	{
