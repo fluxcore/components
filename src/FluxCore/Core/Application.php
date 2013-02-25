@@ -39,8 +39,8 @@ class Application extends Container
 
 			return;
 		} else if ($name == 'prepareResponse' || $name == 'prepareRequest') {
-			array_unshift($args, $app);
-			
+			array_unshift($args, $this);
+
 			return $this['events']->fire("app.$name", $args);
 		}
 
