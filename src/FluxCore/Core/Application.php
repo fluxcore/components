@@ -29,7 +29,7 @@ class Application extends Container
 
 	function __call($name, $args)
 	{
-		if (empty($args) || !$args[0] instanceof Closure) {
+		if (empty($args)) {
 			return;
 		}
 
@@ -38,6 +38,10 @@ class Application extends Container
 			$this['exception']->error($args[0]);
 
 			return;
+		} else if ($name == 'prepareResponse' || $name == 'prepareRequest') {
+			array_unshift($args, $app);
+			
+			return $this['events']->fire("app.$name", $args);
 		}
 
 		// App::before(), App::after(), App::finish(), etc.
