@@ -41,7 +41,8 @@ class Application extends Container
 		} else if ($name == 'prepareResponse' || $name == 'prepareRequest') {
 			array_unshift($args, $this);
 
-			return $this['events']->fire("app.$name", $args);
+			$result = $this['events']->fire("app.$name", $args);
+			return $result[0];
 		}
 
 		// App::before(), App::after(), App::finish(), etc.
