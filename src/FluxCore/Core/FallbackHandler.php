@@ -20,7 +20,7 @@ class FallbackHandler
 		}
 	}
 
-	public function addMissingDependency($name)
+	public function missingDependency($name)
 	{
 		$this->missing[] = $name;
 	}

@@ -37,7 +37,7 @@ class FailFallbackHandlerStub extends FallbackHandler
 {
 	public function checkDependencies()
 	{
-		$this->addMissingDependency('Component');
-		$this->addMissingDependency('Component2');
+		$this->missingDependency('Component');
+		$this->missingDependency('Component2');
 	}
 }
