@@ -3,6 +3,7 @@
 namespace FluxCore\Illuminate;
 
 use FluxCore\Core\FallbackHandler;
+use FluxCore\Exception\Handler as FluxExceptionHandler;
 use Illuminate\Events\Dispatcher as EventDispatcher;
 use Illuminate\Exception\Handler as ExceptionHandler;
 
@@ -37,7 +38,9 @@ class IlluminateFallbackHandler extends FallbackHandler
 		}
 
 		// illuminate/exception
-		if (!$this->app['exception'] instanceof ExceptionHandler) {
+		if (!$this->app['exception'] instanceof ExceptionHandler &&
+			!$this->app['exception'] instanceof FluxExceptionHandler
+		) {
 			$this->missingDependency('illuminate/exception');
 		}
 	}
