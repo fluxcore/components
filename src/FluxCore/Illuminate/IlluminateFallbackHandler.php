@@ -24,24 +24,24 @@ class IlluminateFallbackHandler extends FallbackHandler
 	{
 		// $app['events']
 		if (!isset($this->app['events'])) {
-			$this->missingDependency('$app[\'events\']');
+			return $this->missingDependency('$app[\'events\']');
 		}
 
 		// illuminate/events
 		if (!$this->app['events'] instanceof EventDispatcher) {
-			$this->missingDependency('illuminate/events');
+			return $this->missingDependency('illuminate/events');
 		}
 
 		// $app['exception']
 		if (!isset($this->app['exception'])) {
-			$this->missingDependency('$app[\'exception\']');
+			return $this->missingDependency('$app[\'exception\']');
 		}
 
 		// illuminate/exception
 		if (!$this->app['exception'] instanceof ExceptionHandler &&
 			!$this->app['exception'] instanceof FluxExceptionHandler
 		) {
-			$this->missingDependency('illuminate/exception');
+			return $this->missingDependency('illuminate/exception');
 		}
 	}
 
