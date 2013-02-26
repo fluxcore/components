@@ -49,4 +49,39 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('/', $app['path']);
 		$this->assertEquals('/path', $app['path.base']);
 	}
+
+	public function testSuccessfulFallback()
+	{
+		$app = new Application;
+		$app->setFallbackHandler(new StubFallbackHandler());
+
+		$this->assertInstanceOf('StubFallbackHandler', $app->getFallbackHandler());
+		$this->assertEquals('Fallback Return', $app->fallbackMethod());
+	}
+
+	public function testFallbackNoHandlerAssignedException()
+	{
+		$app = new Application;
+
+		try {
+			$app->fallbackMethod();
+		} catch (RuntimeException $e) {
+			$this->assertEquals(
+				"Can't perform fallback operation as no fallback handler has been assigned.",
+				$e->getMessage()
+			);
+
+			return;
+		}
+
+		$this->fail('Expected RuntimeException has not been raised.');
+	}
+}
+
+class StubFallbackHandler
+{
+	public function fallbackMethod()
+	{
+		return 'Fallback Return';
+	}
 }

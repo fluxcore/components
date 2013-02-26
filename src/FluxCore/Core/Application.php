@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Application extends Container
 {
+	protected $fallbackHandler;
 	protected $initialize = false;
 	protected $run = false;
 
@@ -29,24 +30,24 @@ class Application extends Container
 
 	function __call($name, $args)
 	{
-		if (empty($args)) {
-			return;
+		if (is_null($this->fallbackHandler)) {
+			throw new \RuntimeException(
+				'Can\'t perform fallback operation as no fallback '.
+				'handler has been assigned.'
+			);
 		}
 
-		// App::missing() compatibility.
-		if ($name == 'missing') {
-			$this['exception']->error($args[0]);
+		return method_proxy($this->fallbackHandler, $name, $args);
+	}
 
-			return;
-		} else if ($name == 'prepareResponse' || $name == 'prepareRequest') {
-			array_unshift($args, $this);
+	public function getFallbackHandler()
+	{
+		return $this->fallbackHandler;
+	}
 
-			$result = $this['events']->fire("app.$name", $args);
-			return $result[0];
-		}
-
-		// App::before(), App::after(), App::finish(), etc.
-		$this['events']->listen("app.$name", $args[0]);
+	public function setFallbackHandler($fallbackHandler)
+	{
+		$this->fallbackHandler = $fallbackHandler;
 	}
 
 	public function initialize($callback)
