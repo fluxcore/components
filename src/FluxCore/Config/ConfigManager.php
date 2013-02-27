@@ -64,6 +64,36 @@ class ConfigManager implements \ArrayAccess
 		return ($value !== null) ? $value : $default;
 	}
 
+	public function set($abstract, $value)
+	{
+		// Split last key off of abstract and put it in a separate
+		// value and implode abstract again without key part.
+		$split = explode('.', $abstract);
+		$key = array_pop($split);
+		$abstract = implode('.', $split);
+
+		// If no key was passed, return.
+		if ($abstract == '') {
+			return;
+		}
+
+		// Get config and return if it doesn't exist.
+		$config = $this->get($abstract);
+		if (!$config instanceof Configuration) {
+			return;
+		}
+
+		// If passed value is null, unset the configuration value.
+		if ($value === null) {
+			unset($config[$key]);
+
+			return;
+		}
+
+		// Assign configuration value.
+		$config[$key] = $value;
+	}
+
 	public function offsetGet($offset)
 	{
 		return $this->get($offset);
@@ -71,16 +101,16 @@ class ConfigManager implements \ArrayAccess
 
 	public function offsetSet($offset, $value)
 	{
-		//
+		$this->set($offset, $value);
 	}
 
 	public function offsetUnset($offset)
 	{
-		//
+		$this->set($offset, null);
 	}
 
 	public function offsetExists($offset)
 	{
-		//
+		return $this->get($offset) !== null;
 	}
 }

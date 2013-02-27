@@ -23,7 +23,7 @@ class Configuration implements \ArrayAccess
 
 	function __set($name, $value)
 	{
-		$this->throwNoModifications();
+		$this->data[$name] = $value;
 	}
 
 	public function toArray()
@@ -45,18 +45,11 @@ class Configuration implements \ArrayAccess
 
 	public function offsetSet($offset, $value)
 	{
-		$this->throwNoModifications();
+		$this->data[$offset] = $value;
 	}
 
 	public function offsetUnset($offset)
 	{
-		$this->throwNoModifications();
-	}
-
-	protected function throwNoModifications()
-	{
-		throw new \RuntimeException(
-			"Configuration does not allow modifications."
-		);
+		unset($this->data[$offset]);
 	}
 }

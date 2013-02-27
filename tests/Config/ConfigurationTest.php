@@ -16,18 +16,8 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 
 	public function testSet()
 	{
-		try {
-			$this->c->hello = 'not world';
-		} catch(RuntimeException $e) {
-			$this->assertEquals(
-				'Configuration does not allow modifications.',
-				$e->getMessage()
-			);
-
-			return;
-		}
-
-		$this->fail('Expected RuntimeException was not raised.');
+		$this->c->hello = 'not world';
+		$this->assertEquals('not world', $this->c->hello);
 	}
 
 	public function testGetArrayAccess()
@@ -37,18 +27,8 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 
 	public function testSetArrayAccess()
 	{
-		try {
-			$this->c['hello'] = 'not world';
-		} catch(RuntimeException $e) {
-			$this->assertEquals(
-				'Configuration does not allow modifications.',
-				$e->getMessage()
-			);
-
-			return;
-		}
-
-		$this->fail('Expected RuntimeException was not raised.');
+		$this->c['hello'] = 'not world';
+		$this->assertEquals('not world', $this->c['hello']);
 	}
 
 	public function testToArray()

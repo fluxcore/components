@@ -1,6 +1,7 @@
 <?php
 
 use FluxCore\Config\ConfigManager;
+use FluxCore\Config\Configuration;
 use FluxCore\Config\EngineResolver;
 use FluxCore\IO\FileFinder;
 
@@ -21,7 +22,7 @@ class ConfigManagerTest extends PHPUnit_Framework_TestCase
 	{
 		$this->assertEquals(
 			array('hello' => 'world', 'test' => 'value'),
-			$this->manager->get('test')
+			$this->manager->get('test')->toArray()
 		);
 
 		$this->assertEquals(
@@ -40,7 +41,20 @@ class ConfigManagerTest extends PHPUnit_Framework_TestCase
 		);
 	}
 
-	public function testArrayAccess()
+	public function testSet()
+	{
+		$this->manager->set('test.hello', 'not world');
+		$this->assertEquals('not world', $this->manager->get('test.hello'));
+
+		$this->manager->set('test', array());
+
+		$this->assertEquals(
+			array('hello' => 'not world', 'test' => 'value'),
+			$this->manager->get('test')->toArray()
+		);
+	}
+
+	public function testArrayAccessGet()
 	{
 		$this->assertEquals(
 			'value',
@@ -49,7 +63,7 @@ class ConfigManagerTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(
 			array('hello' => 'world', 'test' => 'value'),
-			$this->manager['test']
+			$this->manager['test']->toArray()
 		);
 
 		$this->assertEquals(
@@ -62,13 +76,32 @@ class ConfigManagerTest extends PHPUnit_Framework_TestCase
 			$this->manager['does.not.exist']
 		);
 	}
+
+	public function testArrayAccessSet()
+	{
+		$this->manager['test.hello'] = 'not world';
+		$this->assertEquals('not world', $this->manager['test.hello']);
+
+		$this->manager['test'] = array();
+
+		$this->assertEquals(
+			array('hello' => 'not world', 'test' => 'value'),
+			$this->manager['test']->toArray()
+		);
+	}
 }
 
 class EngineResolverStub extends EngineResolver
 {
+	protected $config;
+
 	public function resolve($file)
 	{
-		return array('hello' => 'world', 'test' => 'value');
+		if (!$this->config) {
+			$this->config = new Configuration(array('hello' => 'world', 'test' => 'value'));
+		}
+
+		return $this->config;
 	}
 }
 
