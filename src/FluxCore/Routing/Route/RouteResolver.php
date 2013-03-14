@@ -4,20 +4,45 @@ namespace FluxCore\Routing\Route;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * Route resolver class.
+ */
 class RouteResolver
 {
+	/**
+	 * The route collection.
+	 * 
+	 * @var FluxCore\Routing\Route\RouteCollection
+	 */
 	protected $routes;
+
+	/**
+	 * The pattern token definitions.
+	 * 
+	 * @var array
+	 */
 	protected $tokens = array(
 		':string' => '([a-zA-Z]+)',
 		':int' => '([0-9]+)',
 		':alpha' => '([a-zA-Z0-9]+)',
 	);
 
+	/**
+	 * Creates a new route resolver instance.
+	 * 
+	 * @param FluxCore\Routing\Route\RouteCollection $routes
+	 */
 	function __construct(RouteCollection $routes)
 	{
 		$this->routes = $routes;
 	}
 
+	/**
+	 * Resolve route.
+	 * 
+	 * @param RouteKeyable $id
+	 * @return mixed
+	 */
 	public function resolve(RouteKeyable $id)
 	{
 		if($this->routes->has($id)) {
