@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Proxies a method call.
+ *
+ * This is an optimized utility function that is used
+ * to invoke a certain method on a certain class with
+ * the specified arguments.
+ * 
+ * @param object $c The class to invoke the method on.
+ * @param string $m The method to invoke.
+ * @param array $a The arguments to invoke the method with.
+ * @return mixed The result of the proxied invokation.
+ */
 function method_proxy($c, $m, $a)
 {
 	switch(sizeof($a)) {
@@ -13,7 +25,13 @@ function method_proxy($c, $m, $a)
 	}
 }
 
-function closure_proxy($c, $a)
+/**
+ * Proxies a closure call.
+ * @param Closure $c The closure to invoke.
+ * @param array $a The arguments to invoke the closure with.
+ * @return mixed The result of the proxied invokation.
+ */
+function closure_proxy(Closure $c, $a)
 {
 	switch(sizeof($a)) {
 		case 0: return $c();
@@ -26,6 +44,12 @@ function closure_proxy($c, $a)
 	}
 }
 
+/**
+ * Get file extension from path.
+ * 
+ * @param string $path The path to get the file extension from.
+ * @return string The file extension of the path.
+ */
 function file_extension($path)
 {
 	$explode = explode('.', $path);

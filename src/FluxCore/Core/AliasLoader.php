@@ -2,6 +2,9 @@
 
 namespace FluxCore\Core;
 
+/**
+ * Alias autoload class.
+ */
 class AliasLoader {
 
 	/**
