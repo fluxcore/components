@@ -19,7 +19,7 @@ class RouteCollection implements \IteratorAggregate
 	/**
 	 * Add route to collection.
 	 * 
-	 * @param FluxCore\Routing\Route\RouteKeyable $route
+	 * @param FluxCore::Routing::Route::RouteKeyable $route
 	 */
 	public function add(RouteKeyable $route)
 	{
@@ -29,8 +29,8 @@ class RouteCollection implements \IteratorAggregate
 	/**
 	 * Get route from collection.
 	 * 
-	 * @param RouteKeyable $route
-	 * @return FluxCore\Routing\Route\Route
+	 * @param FluxCore::Routing::Route::RouteKeyable $route
+	 * @return FluxCore::Routing::Route::Route
 	 */
 	public function get(RouteKeyable $route)
 	{
@@ -42,7 +42,7 @@ class RouteCollection implements \IteratorAggregate
 	/**
 	 * Does route exist in collection?
 	 * 
-	 * @param FluxCore\Routing\Route\RouteKeyable $route
+	 * @param FluxCore::Routing::Route::RouteKeyable $route
 	 * @return boolean
 	 */
 	public function has(RouteKeyable $route)

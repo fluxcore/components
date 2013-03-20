@@ -12,7 +12,7 @@ class RouteResolver
 	/**
 	 * The route collection.
 	 * 
-	 * @var FluxCore\Routing\Route\RouteCollection
+	 * @var FluxCore::Routing::Route::RouteCollection
 	 */
 	protected $routes;
 
@@ -30,7 +30,7 @@ class RouteResolver
 	/**
 	 * Creates a new route resolver instance.
 	 * 
-	 * @param FluxCore\Routing\Route\RouteCollection $routes
+	 * @param FluxCore::Routing::Route::RouteCollection $routes
 	 */
 	function __construct(RouteCollection $routes)
 	{
@@ -40,7 +40,7 @@ class RouteResolver
 	/**
 	 * Resolve route.
 	 * 
-	 * @param FluxCore\Routing\Route\RouteKeyable $id
+	 * @param FluxCore::Routing::Route::RouteKeyable $id
 	 * @return mixed
 	 */
 	public function resolve(RouteKeyable $id)

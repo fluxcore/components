@@ -12,7 +12,7 @@ interface EngineInterface
 	 * configuration object.
 	 * 
 	 * @param string $file
-	 * @return FluxCore\Config\Configuration
+	 * @return FluxCore::Config::Configuration
 	 */
 	public function parse($file);
 }

@@ -36,8 +36,8 @@ class Application extends Container
 	/**
 	 * Creates a new Application instance.
 	 * 
-	 * @param Symfony\Component\HttpFoundation\Request $request
-	 * @param FluxCore\Core\ServiceManager $services
+	 * @param Symfony::Component::HttpFoundation::Request $request
+	 * @param FluxCore::Core::ServiceManager $services
 	 */
 	function __construct(Request $request = null, ServiceManager $services = null)
 	{

@@ -2,6 +2,8 @@
 
 namespace FluxCore\IO;
 
+use RuntimeException;
+
 /**
  * File finder class.
  */
@@ -24,7 +26,7 @@ class FileFinder
 		$this->path = rtrim($path, '\\/').'/';
 		
 		if(!is_dir($this->path)) {
-			throw new \RuntimeException(
+			throw new RuntimeException(
 				"The path '{$this->path}' does not exist."
 			);
 		}

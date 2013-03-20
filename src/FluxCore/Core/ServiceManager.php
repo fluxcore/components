@@ -26,7 +26,7 @@ class ServiceManager
 	/**
 	 * Register service provider.
 	 * 
-	 * @param Illuminate\Support\ServiceProvider $provider
+	 * @param Illuminate::Support::ServiceProvider $provider
 	 */
 	public function register(ServiceProvider $provider)
 	{

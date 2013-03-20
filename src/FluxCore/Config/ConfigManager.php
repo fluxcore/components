@@ -13,14 +13,14 @@ class ConfigManager implements \ArrayAccess
 	/**
 	 * The configuration engine resolver.
 	 * 
-	 * @var FluxCore\Config\EngineResolver
+	 * @var FluxCore::Config::EngineResolver
 	 */
 	protected $resolver;
 
 	/**
 	 * The configuration file finder.
 	 * 
-	 * @var FluxCore\IO\FileFinder
+	 * @var FluxCore::IO::FileFinder
 	 */
 	protected $fileFinder;
 
@@ -34,8 +34,8 @@ class ConfigManager implements \ArrayAccess
 	/**
 	 * Creates a new configuration manager instance.
 	 * 
-	 * @param FluxCore\Config\EngineResolver $resolver
-	 * @param FluxCore\IO\FileFinder $fileFinder
+	 * @param FluxCore::Config::EngineResolver $resolver
+	 * @param FluxCore::IO::FileFinder $fileFinder
 	 */
 	function __construct(EngineResolver $resolver, FileFinder $fileFinder)
 	{
@@ -46,7 +46,7 @@ class ConfigManager implements \ArrayAccess
 	/**
 	 * Get the configuration engine resolver.
 	 * 
-	 * @return FluxCore\Config\EngineResolver
+	 * @return FluxCore::Config::EngineResolver
 	 */
 	public function getResolver()
 	{
@@ -56,7 +56,7 @@ class ConfigManager implements \ArrayAccess
 	/**
 	 * Get the configuration file finder.
 	 * 
-	 * @return FluxCore\IO\FileFinder
+	 * @return FluxCore::IO::FileFinder
 	 */
 	public function getFileFinder()
 	{

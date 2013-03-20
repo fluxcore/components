@@ -2,6 +2,8 @@
 
 namespace FluxCore\Routing\Route;
 
+use Closure;
+
 /**
  * Route class.
  */
@@ -26,9 +28,9 @@ class Route extends RouteKeyable
 	 * 
 	 * @param string $pattern
 	 * @param string $method
-	 * @param \Closure $handler
+	 * @param Closure $handler
 	 */
-	function __construct($pattern, $method, \Closure $handler)
+	function __construct($pattern, $method, Closure $handler)
 	{
 		parent::__construct($pattern, $method);
 		$this->setHandler(($handler != null) ? $handler : function() { });
@@ -49,7 +51,7 @@ class Route extends RouteKeyable
 	 * 
 	 * @param Closure $handler
 	 */
-	public function setHandler(\Closure $handler)
+	public function setHandler(Closure $handler)
 	{
 		return ($this->handler = $handler);
 	}

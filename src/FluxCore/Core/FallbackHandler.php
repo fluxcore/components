@@ -10,7 +10,7 @@ class FallbackHandler
 	/**
 	 * The application.
 	 * 
-	 * @var FluxCore\Core\Application
+	 * @var FluxCore::Core::Application
 	 */
 	protected $app;
 
@@ -24,7 +24,7 @@ class FallbackHandler
 	/**
 	 * Creates a new fallback handler instance.
 	 * 
-	 * @param array|FluxCore\Core\Application $app
+	 * @param array|FluxCore::Core::Application $app
 	 */
 	function __construct($app = null)
 	{

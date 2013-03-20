@@ -2,6 +2,7 @@
 
 namespace FluxCore\Config;
 
+use RuntimeException;
 use FluxCore\Config\Engine\EngineInterface;
 
 /**
@@ -17,13 +18,13 @@ class EngineResolver
 	 * the same file-extension.
 	 * 
 	 * @param string $file
-	 * @return FluxCore\Config\Configuration
+	 * @return FluxCore::Config::Configuration
 	 */
 	public function resolve($file)
 	{
 		$extension = file_extension($file);
 		if(!isset($this->engines[$extension])) {
-			throw new \RuntimeException(
+			throw new RuntimeException(
 				"There's no engine assigned for the '$extension' file-format."
 			);
 		}
@@ -38,8 +39,8 @@ class EngineResolver
 	 * with the specified file-extension.
 	 * 
 	 * @param string $extension
-	 * @param FluxCore\Config\EngineInterface $engine
-	 * @return FluxCore\Config\EngineInterface
+	 * @param FluxCore::Config::EngineInterface $engine
+	 * @return FluxCore::Config::EngineInterface
 	 */
 	public function register($extension, EngineInterface $engine)
 	{

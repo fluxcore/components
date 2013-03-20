@@ -27,6 +27,7 @@ function method_proxy($c, $m, $a)
 
 /**
  * Proxies a closure call.
+ * 
  * @param Closure $c The closure to invoke.
  * @param array $a The arguments to invoke the closure with.
  * @return mixed The result of the proxied invokation.
