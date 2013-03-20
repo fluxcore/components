@@ -40,7 +40,7 @@ class RouteResolver
 	/**
 	 * Resolve route.
 	 * 
-	 * @param RouteKeyable $id
+	 * @param FluxCore\Routing\Route\RouteKeyable $id
 	 * @return mixed
 	 */
 	public function resolve(RouteKeyable $id)

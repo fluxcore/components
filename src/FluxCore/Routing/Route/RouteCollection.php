@@ -42,7 +42,7 @@ class RouteCollection implements \IteratorAggregate
 	/**
 	 * Does route exist in collection?
 	 * 
-	 * @param RouteKeyable $route
+	 * @param FluxCore\Routing\Route\RouteKeyable $route
 	 * @return boolean
 	 */
 	public function has(RouteKeyable $route)
